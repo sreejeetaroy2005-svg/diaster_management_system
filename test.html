@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Safety Ops — Admin</title>
+  <style>
+    :root{
+      --bg: #f7fafc;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --line: #e2e8f0;
+      --shadow: 0 10px 30px rgba(2, 6, 23, 0.08);
+      --r: 18px;
+      --brand: #2563eb;
+      --ok:#22c55e; --warn:#f59e0b; --alert:#ef4444; --info:#3b82f6;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0; font:14px/1.35 system-ui,-apple-system,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans; color:var(--text); background:radial-gradient(60% 90% at 50% -10%, #eef6ff 0%, #fff 60%)}
+    .container{max-width:1100px;margin:0 auto;padding:24px}
+    .topbar{position:sticky; top:0; backdrop-filter:saturate(1.2) blur(8px); border-bottom:1px solid var(--line); background:rgba(255,255,255,.85); z-index:10}
+    .topbar-inner{display:flex; align-items:center; justify-content:space-between; height:64px; padding:0 16px}
+    .brand{display:flex; gap:10px; align-items:center; font-weight:600}
+    .icon-bubble{display:grid; place-items:center; width:36px; height:36px; border-radius:12px; border:1px solid var(--line); background:#fff; box-shadow:0 2px 8px rgba(2,6,23,.04)}
+    .grid{display:grid; gap:16px}
+    @media(min-width:768px){.grid.cols-2{grid-template-columns:repeat(2,1fr)} .grid.cols-3{grid-template-columns:repeat(3,1fr)} .grid.cols-4{grid-template-columns:repeat(4,1fr)}}
+    .row{display:flex; gap:10px; align-items:center}
+    .card{background:var(--card); border:1px solid var(--line); border-radius:var(--r); box-shadow:var(--shadow)}
+    .card .head{padding:14px 16px; border-bottom:1px solid var(--line); display:flex; align-items:center; justify-content:space-between}
+    .card .body{padding:16px}
+    .btn{appearance:none; border:1px solid var(--line); background:#fff; padding:10px 14px; border-radius:14px; cursor:pointer; box-shadow:0 2px 8px rgba(2,6,23,.05); transition:.2s}
+    .btn:hover{transform:translateY(-1px); box-shadow:0 6px 18px rgba(2,6,23,.10)}
+    .btn.solid{background:var(--brand); color:#fff; border-color:transparent}
+    .btn.ok{background:var(--ok); color:#fff; border-color:transparent}
+    .btn.warn{background:var(--warn); color:#000; border-color:transparent}
+    .btn.alert{background:var(--alert); color:#fff; border-color:transparent}
+    label{font-size:12px; color:var(--muted); display:block; margin-bottom:6px}
+    input, select, textarea{width:100%; padding:12px; border:1px solid var(--line); border-radius:14px; outline:none; background:#fff}
+    input:focus, select:focus, textarea:focus{border-color:#bfdbfe; box-shadow:0 0 0 4px rgba(59,130,246,.12)}
+    .muted{color:var(--muted)}
+    .badge{font-size:12px; border:1px solid var(--line); padding:4px 10px; border-radius:999px; background:#fff}
+    .kpi{display:flex; flex-direction:column; gap:10px}
+    .kpi .value{font-size:20px; font-weight:700}
+    .switch{position:relative; width:44px; height:24px}
+    .switch input{opacity:0; width:0; height:0}
+    .slider{position:absolute; inset:0; background:#e2e8f0; border-radius:999px; transition:.2s}
+    .slider:before{content:""; position:absolute; width:18px; height:18px; left:3px; top:3px; background:#fff; border-radius:50%; transition:.2s; box-shadow:0 1px 3px rgba(0,0,0,.15)}
+    .switch input:checked + .slider{background:#93c5fd}
+    .switch input:checked + .slider:before{transform:translateX(20px)}
+    .activity{display:flex; flex-direction:column; gap:10px}
+    .activity .item{display:flex; justify-content:space-between; gap:10px; padding:10px; border:1px solid var(--line); border-radius:12px}
+    .tag{display:inline-flex; align-items:center; gap:6px; padding:2px 8px; border-radius:999px; font-size:12px}
+    .tag.ok{background:#dcfce7}
+    .tag.warn{background:#fef9c3}
+    .tag.alert{background:#fee2e2}
+    .footer{font-size:12px; color:var(--muted); padding:20px 0 60px}
+    details{border:1px solid var(--line); border-radius:12px; padding:12px; background:#fff}
+    details>summary{cursor:pointer; list-style:none}
+    details>summary::-webkit-details-marker{display:none}
+    .tests{background:#0b1220; color:#e2e8f0; border-radius:12px; padding:12px; font:12px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}
+    .tests .ok{color:#22c55e}
+    .tests .fail{color:#ef4444}
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="topbar-inner container">
+      <div class="brand"><span class="icon-bubble">🛡</span><span id="brand">Safety Ops — Admin</span></div>
+      <div class="row">
+        <button class="btn" id="publish">Publish snapshot</button>
+        <button class="btn" id="download">Download JSON</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row" style="justify-content:space-between; align-items:flex-end; flex-wrap:wrap">
+      <div>
+        <h1 style="margin:8px 0 4px; font-size:24px">Operations Console</h1>
+        <div class="muted">Update accidents, check calamity statuses, send alerts, and trigger emergency actions.</div>
+      </div>
+      <div class="row">
+        <label class="switch" title="Enable local test notifications">
+          <input type="checkbox" id="notif" />
+          <span class="slider"></span>
+        </label>
+        <span class="muted" style="font-size:12px">Browser test alerts</span>
+      </div>
+    </div>
+
+    <!-- KPIs -->
+    <div class="grid cols-4" style="margin-top:16px">
+      <div class="card kpi">
+        <div class="head"><div class="row"><span class="icon-bubble">🚧</span><strong>Accidents Today</strong></div></div>
+        <div class="body">
+          <div class="row" style="justify-content:space-between">
+            <div>
+              <div class="muted">Count</div>
+              <div class="value" id="accidents-val">0</div>
+            </div>
+            <div class="row">
+              <button class="btn" id="acc-dec">−</button>
+              <button class="btn" id="acc-inc">＋</button>
+            </div>
+          </div>
+          <div class="row" style="margin-top:10px">
+            <input type="number" id="accidents-input" placeholder="Type a number" />
+            <button class="btn" id="acc-save">Save</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card kpi">
+        <div class="head"><div class="row"><span class="icon-bubble">🆘</span><strong>Emergency Mode</strong></div></div>
+        <div class="body">
+          <div class="row" style="justify-content:space-between">
+            <span id="emergency-chip" class="tag ok">Normal</span>
+            <div class="row">
+              <button class="btn warn" id="emergency-watch">Watch</button>
+              <button class="btn alert" id="emergency-on">Emergency</button>
+              <button class="btn ok" id="emergency-off">Clear</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card kpi">
+        <div class="head"><div class="row"><span class="icon-bubble">📞</span><strong>Hotline</strong></div></div>
+        <div class="body">
+          <label>Primary hotline</label>
+          <input id="hotline" placeholder="e.g., 1070" />
+          <div class="muted" style="margin-top:6px">Shown in public banner during alerts.</div>
+        </div>
+      </div>
+
+      <div class="card kpi">
+        <div class="head"><div class="row"><span class="icon-bubble">🏷</span><strong>Region / Org</strong></div></div>
+        <div class="body grid cols-2">
+          <div>
+            <label>Organisation</label>
+            <input id="org" value="Safety Ops Cell" />
+          </div>
+          <div>
+            <label>Region</label>
+            <input id="region" value="Bengaluru Urban" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Calamity Check -->
+    <div class="card" style="margin-top:16px">
+      <div class="head"><strong>Calamity Check</strong><span class="muted" style="font-size:12px">Set status per hazard</span></div>
+      <div class="body grid cols-4" id="hazards">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+
+    <!-- Alerts -->
+    <div class="grid cols-2" style="margin-top:16px">
+      <div class="card">
+        <div class="head"><strong>Send Alert</strong></div>
+        <div class="body">
+          <div class="grid cols-2">
+            <div>
+              <label>Title</label>
+              <input id="a-title" placeholder="e.g., Accident cluster on NH-44" />
+            </div>
+            <div>
+              <label>Severity</label>
+              <select id="a-sev">
+                <option value="info">Info</option>
+                <option value="medium" selected>Medium</option>
+                <option value="high">High</option>
+                <option value="critical">Critical</option>
+              </select>
+            </div>
+          </div>
+          <div style="margin-top:10px">
+            <label>Message</label>
+            <textarea id="a-msg" rows="4" placeholder="Avoid the area. Use alternate route. Hotline: 1070"></textarea>
+          </div>
+          <div style="margin-top:10px">
+            <label>Audience (optional)</label>
+            <input id="a-aud" placeholder="e.g., Ring Road Sectors 3–6" />
+          </div>
+          <div class="row" style="margin-top:10px">
+            <button class="btn solid" id="a-send">Send Alert</button>
+            <span class="badge" id="sev-badge">medium</span>
+          </div>
+          <div class="muted" style="margin-top:14px">Recent alerts</div>
+          <div id="alerts" class="activity" style="margin-top:6px"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="head"><strong>Public Banner Embed</strong></div>
+        <div class="body">
+          <div class="muted">Paste this into a public page to show the latest status + hotline.</div>
+          <pre id="embed"></pre>
+          <div class="row"><button class="btn" id="copy">Copy</button></div>
+        </div>
+      </div>
+    </div>
+
+    <details style="margin-top:18px">
+      <summary><strong>Self-tests</strong> (init & parsing robustness)</summary>
+      <div class="tests" id="tests"></div>
+    </details>
+
+    <div class="footer">Demo-only UI. Replace localStorage with your API before production.</div>
+  </div>
+
+<script>
+(function(){
+  const LS = { STATE: 'safety_ops_state', PUBLIC: 'safety_ops_public' };
+  const $ = (s)=> document.querySelector(s);
+  const fmt = (n)=> new Intl.NumberFormat('en-IN').format(Number(n||0));
+
+  // ---- Robust parsing & defaults ----
+  const DEFAULT_STATE = Object.freeze({
+    org:'Safety Ops Cell', region:'Bengaluru Urban', hotline:'1070',
+    accidents: 0,
+    hazards: {
+      flood:'normal', earthquake:'normal', cyclone:'normal', fire:'normal',
+      landslide:'normal', heatwave:'normal', pandemic:'normal', storm:'normal'
+    },
+    alerts: [],
+    emergency: 'normal',
+    notif: false,
+  });
+
+  function normalizeState(rawString, defaults){
+    let parsed = null;
+    try { parsed = rawString ? JSON.parse(rawString) : null; } catch { parsed = null; }
+    // If JSON was the literal null or not an object, ignore it
+    if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) parsed = {};
+    // Shallow merge with defaults; nested hazards merged carefully
+    const merged = { ...defaults, ...parsed, hazards: { ...defaults.hazards, ...(parsed.hazards||{}) } };
+    return merged;
+  }
+
+  // Load state from localStorage safely (handles 'null' and malformed JSON)
+  let state = normalizeState(localStorage.getItem(LS.STATE), DEFAULT_STATE);
+
+  // Elements
+  const accidentsVal = $('#accidents-val');
+  const accidentsInput = $('#accidents-input');
+  const hazardsWrap = $('#hazards');
+  const alertsWrap = $('#alerts');
+  const org = $('#org');
+  const region = $('#region');
+  const hotline = $('#hotline');
+  const notif = $('#notif');
+  const sevBadge = $('#sev-badge');
+  const embed = $('#embed');
+
+  // Render helpers
+  function save(){ try{ localStorage.setItem(LS.STATE, JSON.stringify(state)); }catch{} }
+  function renderBrand(){ const el=$('#brand'); if(el) el.textContent = ${state.org} — Admin; }
+  function renderAccidents(){ accidentsVal.textContent = fmt(state.accidents); accidentsInput.value = state.accidents; }
+  function label(s){ return s==='normal'?'Normal': s==='watch'?'Watch':'Warning'; }
+
+  function renderHazards(){
+    const H = Object.keys(state.hazards);
+    hazardsWrap.innerHTML = '';
+    H.forEach(key=>{
+      const status = state.hazards[key];
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.innerHTML = `
+        <div class="body">
+          <div class="row" style="justify-content:space-between">
+            <strong style="text-transform:capitalize">${key}</strong>
+            <span class="tag ${status==='normal'?'ok':status==='watch'?'warn':'alert'}" id="tag-${key}">${label(status)}</span>
+          </div>
+          <div class="row" style="margin-top:10px; flex-wrap:wrap">
+            <button class="btn" data-hz="${key}" data-to="normal">Normal</button>
+            <button class="btn warn" data-hz="${key}" data-to="watch">Watch</button>
+            <button class="btn alert" data-hz="${key}" data-to="warning">Warning</button>
+          </div>
+        </div>`;
+      hazardsWrap.appendChild(card);
+    });
+  }
+
+  function renderAlerts(){
+    alertsWrap.innerHTML = '';
+    state.alerts.forEach(a=>{
+      const el = document.createElement('div');
+      el.className = 'item';
+      el.innerHTML = `
+        <div>
+          <div style="font-weight:600">${a.title} <span class="badge" style="text-transform:capitalize">${a.severity}</span></div>
+          <div class="muted" style="font-size:12px">${new Date(a.ts).toLocaleString()}</div>
+          <div style="margin-top:4px">${a.msg}</div>
+          ${a.aud?<div class="muted" style="margin-top:4px; font-size:12px">Audience: ${a.aud}</div>:''}
+        </div>
+        <button class="btn" data-del="${a.id}">Delete</button>`;
+      alertsWrap.appendChild(el);
+    });
+  }
+
+  function renderEmergency(){
+    const chip = $('#emergency-chip');
+    const m = state.emergency;
+    chip.textContent = m==='normal'?'Normal':m==='watch'?'Watch':'Emergency';
+    chip.className = 'tag ' + (m==='normal'?'ok':m==='watch'?'warn':'alert');
+  }
+
+  function renderEmbed(){
+    const code = <div id="safety-banner"></div>\n<script>\n(function(){\n  try{\n    const data = JSON.parse(localStorage.getItem('${LS.PUBLIC}')||'null');\n    const root = document.getElementById('safety-banner');\n    if(!data){ root.innerHTML='No status published yet.'; return; }\n    const latest = (data.alerts||[])[0];\n    const m = data.emergency;\n    const bg = m==='emergency'?'#fee2e2':m==='watch'?'#fef9c3':'#dcfce7';\n    root.style.cssText = 'padding:12px 16px;border-radius:12px;border:1px solid #e5e7eb;background:'+bg+';font:14px system-ui, sans-serif;';\n    const line1 = '<strong>'+(data.org||'Safety Ops')+' — '+(data.region||'')+'</strong> | Hotline: '+(data.hotline||'');\n    const line2 = latest ? (latest.title+': '+latest.msg) : 'No active alerts.';\n    root.innerHTML = line1+'<br/>'+line2;\n  }catch(e){ console.error(e); }\n})();\n<\/script>;
+    embed.textContent = code;
+  }
+
+  // ----- Initial render (safe even if state came from 'null') -----
+  renderBrand();
+  org.value = state.org; region.value = state.region; hotline.value = state.hotline; notif.checked = !!state.notif;
+  renderAccidents(); renderHazards(); renderAlerts(); renderEmergency(); renderEmbed();
+
+  // ----- Events -----
+  // Accidents
+  $('#acc-inc').addEventListener('click',()=>{ state.accidents++; save(); renderAccidents(); });
+  $('#acc-dec').addEventListener('click',()=>{ state.accidents = Math.max(0, state.accidents-1); save(); renderAccidents(); });
+  $('#acc-save').addEventListener('click',()=>{ state.accidents = Number(accidentsInput.value)||0; save(); renderAccidents(); });
+
+  // Org / region / hotline
+  org.addEventListener('input',()=>{ state.org = org.value; save(); renderBrand(); renderEmbed(); });
+  region.addEventListener('input',()=>{ state.region = region.value; save(); renderEmbed(); });
+  hotline.addEventListener('input',()=>{ state.hotline = hotline.value; save(); renderEmbed(); });
+
+  // Notifications
+  notif.addEventListener('change', async ()=>{
+    const checked = notif.checked;
+    try{
+      if(checked && 'Notification' in window && Notification.permission!=='granted'){
+        const perm = await Notification.requestPermission();
+        if(perm!=='granted'){ notif.checked=false; return; }
+      }
+    }catch{}
+    state.notif = checked; save();
+  });
+
+  // Hazards buttons (event delegation)
+  hazardsWrap.addEventListener('click', (e)=>{
+    const btn = e.target.closest('button[data-hz]'); if(!btn) return;
+    const key = btn.getAttribute('data-hz');
+    const to = btn.getAttribute('data-to');
+    const next = to==='normal'?'normal': to==='watch'?'watch':'warning';
+    state.hazards[key] = next; save(); renderHazards();
+  });
+
+  // Emergency
+  $('#emergency-on').addEventListener('click',()=>{ state.emergency='emergency'; save(); renderEmergency(); notify('EMERGENCY MODE', 'Global emergency is ON'); });
+  $('#emergency-off').addEventListener('click',()=>{ state.emergency='normal'; save(); renderEmergency(); notify('Status: Normal', 'Emergency cleared'); });
+  $('#emergency-watch').addEventListener('click',()=>{ state.emergency='watch'; save(); renderEmergency(); notify('Watch Mode', 'Heightened monitoring active'); });
+
+  // Alerts
+  $('#a-sev').addEventListener('change',()=>{ sevBadge.textContent = $('#a-sev').value; });
+  $('#a-send').addEventListener('click',()=>{
+    const title = $('#a-title').value.trim();
+    const msg = $('#a-msg').value.trim();
+    if(!title || !msg){ alert('Please fill title and message'); return; }
+    const entry = { id:uid(), title, msg, aud:$('#a-aud').value.trim(), severity:$('#a-sev').value, ts:Date.now() };
+    state.alerts = [entry, ...state.alerts]; save(); renderAlerts(); renderEmbed();
+    notify(${entry.severity.toUpperCase()}: ${title}, msg);
+    $('#a-title').value=''; $('#a-msg').value=''; $('#a-aud').value=''; $('#a-sev').value='medium'; sevBadge.textContent='medium';
+  });
+  alertsWrap.addEventListener('click', (e)=>{
+    const btn = e.target.closest('button[data-del]'); if(!btn) return;
+    const id = btn.getAttribute('data-del'); state.alerts = state.alerts.filter(a=>a.id!==id); save(); renderAlerts(); renderEmbed();
+  });
+
+  // Publish & Download
+  $('#publish').addEventListener('click',()=>{
+    const data = {
+      org:state.org, region:state.region, hotline:state.hotline,
+      accidents: state.accidents, hazards: state.hazards,
+      alerts: state.alerts, emergency: state.emergency
+    };
+    try{ localStorage.setItem(LS.PUBLIC, JSON.stringify(data)); }catch{}
+    alert('Public snapshot updated locally.');
+  });
+  $('#download').addEventListener('click',()=>{
+    const data = {
+      org:state.org, region:state.region, hotline:state.hotline,
+      accidents: state.accidents, hazards: state.hazards,
+      alerts: state.alerts, emergency: state.emergency
+    };
+    const blob = new Blob([JSON.stringify(data,null,2)], {type:'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href=url; a.download='safety_ops_'+Date.now()+'.json'; a.click(); URL.revokeObjectURL(url);
+  });
+
+  function notify(title, body){
+    try{
+      if(!state.notif) return; if(!('Notification' in window)) return;
+      if(Notification.permission==='granted') new Notification(title,{body});
+    }catch{}
+  }
+
+  // ----- Self Tests -----
+  (function runTests(){
+    const out = [];
+    const defaults = DEFAULT_STATE;
+    const cases = [
+      {name:'Empty string → defaults', raw:'', expect:(s)=> s.org===defaults.org && s.accidents===0},
+      {name:'Literal "null" → defaults', raw:'null', expect:(s)=> s.region===defaults.region && s.alerts.length===0},
+      {name:'Malformed JSON → defaults', raw:'{"org": "X",', expect:(s)=> s.org===defaults.org},
+      {name:'Partial object merges', raw:JSON.stringify({org:'X', hazards:{flood:'watch'}}), expect:(s)=> s.org==='X' && s.hazards.flood==='watch' && s.hazards.fire==='normal'},
+    ];
+    cases.forEach(tc=>{
+      const s = normalizeState(tc.raw, defaults);
+      const ok = !!tc.expect(s);
+      out.push(${ok?"✅":"❌"} ${tc.name});
+    });
+    const el = document.getElementById('tests');
+    if(el) el.innerHTML = out.map(line=> line.startsWith('✅')? <div class="ok">${line}</div> : <div class="fail">${line}</div>).join('');
+  })();
+})();
+</script>
+</body>
+</html>

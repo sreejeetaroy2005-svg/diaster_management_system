@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Page</title>
+    <meta name="description" content="Report your incident.">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+        *{
+            font-family:  "Montserrat", sans-serif;
+            padding: 0;
+            margin: 0;
+        }
+
+        body{
+            background-color: rgb(155, 154, 153);
+            display:flex;
+            justify-content: center;
+        }
+
+        .outer{
+            border:2px solid rgb(81, 79, 79);
+            border-radius: 13px;
+            background-color: rgb(218, 213, 213);
+            margin-top: 20px;
+            padding-top: 10px;
+            margin-bottom: 10px;
+            width:85vw;
+        }
+
+        #heading{
+            font-family:  "Montserrat", sans-serif;
+            font-weight: 700;
+            text-align: center;
+            background-color: oklch(58.797% 0.19336 37.475);
+        }
+
+        .formip{
+            padding-left: 5vw;
+            font-family:  "Montserrat", sans-serif;
+            font-weight: 500;
+        }
+
+        .itype{
+            text-align: center;
+        }
+
+        .a{
+            margin-top: 10px;
+            margin-bottom: 10px;
+            margin-left: 10px;
+        }
+
+        .b{
+            margin-top: 10px;
+            padding-left: 3vw;
+            font-size: 25px;
+        }
+
+        .loc_box{
+            border:2px solid rgb(144, 133, 133);
+            border-radius: 13px;
+            margin:2vw;
+            margin-bottom: 13px;
+        }
+
+        .hvr:hover{
+            border-color: rgb(72, 69, 69);
+        }
+        
+        .hvr::placeholder{
+            text-align: center;
+        }
+        .hvr:placeholder-shown{
+            background-color: rgb(181, 181, 181);
+        }
+        .sbm{
+            text-align: center;
+            margin-bottom: 13px;
+        }
+        .Recent
+        {
+            background-color: #111;
+  border: 1px solid #ff3333;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s; 
+        }
+
+        /*.btn{
+            background-color: oklch(58.797% 0.19336 37.475);
+            font-weight: 600;
+            width: 80px;
+            height:25px;
+            border-radius: 6px;
+        }
+        .btn:hover{
+            background-color: rgb(239, 129, 18);
+        }*/
+
+    </style>
+</head>
+<body>
+    <div class="outer">
+        <h2 id="heading">REPORT INCIDENT</h2>
+        <p class="b">Please specify the details of the occurred incidence here:</p>
+        <div>
+            <form action="#" method="post" enctype="multipart/form-data">
+                <div class="loc_box">
+                    <div>
+                        <div style=" width: 77vw; padding-left: 2vw;padding-top:3px;">
+                            <p class="b" style="background-color: gray;padding-left:3px;">Incident Details:</p>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="incident_type" class="formip">Incident Type(*):</label>
+                        <select name="incident_type" class="a" required>
+                            <option class="itype" value="" disabled selected>--</option>
+                            <option class="itype" value="garbage">Found garbage</option>
+                            <option class="itype" value="Path broken">Path is blocked/damaged</option>
+                            <option class="itype" value="Misc">Something else</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="image" class="formip">Upload an image:</label>
+                        <input type="file" name="image" accept="image/*" style="padding-left: 10px;">
+                    </div>
+                    <div>
+                        <div style="display: inline-block; vertical-align: middle; padding-top: 10px;">
+                            <label for="loc" class="formip">Please explain the issue:</label>
+                        </div>
+                        <div style="display: inline-block; vertical-align: middle; padding-top: 10px; padding-left: 10px; padding-bottom: 10px;">
+                            <textarea placeholder="Enter Text" name="loc" rows="5" cols="20" style="resize: none;" class="hvr"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="loc_box">
+                    <div>
+                        <div style=" width: 77vw; padding-left: 2vw;padding-top:3px;">
+                            <p class="b" style="background-color: gray;padding-left:3px;">Incident Location:</p>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="State" class="formip">State(*):</label>
+                        <select name="State" class="a" required>
+                            <option class="itype" value="" disabled selected>--</option>
+                            <option class="itype" value="AP">Andhra Pradesh</option>
+                            <option class="itype" value="ArP">Arunachal Pradesh</option>
+                            <option class="itype" value="Asm">Assam</option>
+                            <option class="itype" value="Br">Bihar</option>
+                            <option class="itype" value="Ch">Chattisgarh</option>
+                            <option class="itype" value="Goa">Goa</option>
+                            <option class="itype" value="Gj">Gujarat</option>
+                            <option class="itype" value="Hrn">Haryana</option>
+                            <option class="itype" value="HP">Himachal Pradesh</option>
+                            <option class="itype" value="Jrd">Jharkand</option>
+                            <option class="itype" value="Ktk">Karnataka</option>
+                            <option class="itype" value="Krl">Kerala</option>
+                            <option class="itype" value="MP">Madhya Pradesh</option>
+                            <option class="itype" value="Mhr">Maharashtra</option>
+                            <option class="itype" value="Mnp">Manipur</option>
+                            <option class="itype" value="Mgh">Meghalaya</option>
+                            <option class="itype" value="Mzm">Mizoram</option>
+                            <option class="itype" value="Ngd">Nagaland</option>
+                            <option class="itype" value="Ods">Odisha</option>
+                            <option class="itype" value="Pnb">Punjab</option>
+                            <option class="itype" value="Rjn">Rajasthan</option>
+                            <option class="itype" value="Skm">Sikkim</option>
+                            <option class="itype" value="TN">Tamil Nadu</option>
+                            <option class="itype" value="Tln">Telangana</option>
+                            <option class="itype" value="Trp">Tripura</option>
+                            <option class="itype" value="UK">Uttarakhand</option>
+                            <option class="itype" value="UP">Uttar Pradesh</option>
+                            <option class="itype" value="WB">West Bengal</option>
+                            <option class="itype" value="Ani">Andaman and Nicobar Islands</option>
+                            <option class="itype" value="Cnd">Chandigarh</option>
+                            <option class="itype" value="Dnh">Dadra and Nagar Haveli Daman and Diu</option>
+                            <option class="itype" value="DD">Daman and Diu</option>
+                            <option class="itype" value="DL">Delhi</option>
+                            <option class="itype" value="JK">Jammu and Kashmir</option>
+                            <option class="itype" value="LA">Ladakh</option>
+                            <option class="itype" value="LD">Lakshadweep</option>
+                            <option class="itype" value="PY">Puducherry</option>                        
+                        </select>
+                    </div>
+
+                    <div>
+                        <div style="display: inline-block; vertical-align: middle; padding-top: 20px;">
+                            <label for="cit" class="formip">City(*):</label>
+                        </div>
+                        <div style="display: inline-block; vertical-align: middle; padding-top: 20px; padding-left: 10px;">
+                            <textarea placeholder="Enter Text" name="cit" rows="1" cols="20" style="resize: none;" class="hvr"></textarea>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div style="display: inline-block; vertical-align: middle; padding-top: 20px;">
+                            <label for="ar" class="formip">Area(*):</label>
+                        </div>
+                        <div style="display: inline-block; vertical-align: middle; padding-top: 20px; padding-left: 10px;">
+                            <textarea placeholder="Enter Text" name="ar" rows="3" cols="20" style="resize: none;" class="hvr"></textarea>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div style="display: inline-block; vertical-align: middle; padding-top: 10px;">
+                            <label for="loc" class="formip">Directions to reach(*):</label>
+                        </div>
+                        <div style="display: inline-block; vertical-align: middle; padding-top: 10px; padding-left: 10px;padding-bottom: 10px;">
+                            <textarea placeholder="Enter Text" name="loc" rows="5" cols="20" style="resize: none;" class="hvr"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="sbm">
+                    <a href="confirmation.html" class="Recent">Submit</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

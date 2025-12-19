@@ -1,0 +1,144 @@
+/* style4.css */
+
+/* Import Poppins font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #9aa7df 0%, #9f85b9 100%);
+  color: #2c3e50;
+  min-height: 100vh;
+  padding: 20px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+.login-btn {
+  background: linear-gradient(135deg, #4299e1, #3182ce);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 1rem;
+  box-shadow: 0 6px 15px rgba(49, 130, 206, 0.43);
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  white-space: nowrap;
+}
+
+.login-btn:hover,
+.login-btn:focus {
+  background: linear-gradient(135deg, #3182ce, #2c5282);
+  box-shadow: 0 8px 25px rgba(49, 130, 206, 0.6);
+  transform: translateY(-2px);
+}
+
+/* Container Styling */
+.container {
+  max-width: 400px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 20px;
+  padding: 2.5rem 3rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  user-select: none;
+  box-sizing: border-box;
+  align-items: center;
+  margin-top: 90px;
+}
+
+/* Card */
+.card h2 {
+  font-size: 1.7rem;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+  color: #1a202c;
+}
+
+.card p {
+  font-size: 1rem;
+  color: #718096;
+  margin-bottom: 1.75rem;
+  line-height: 1.5;
+}
+
+/* Form styling */
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-weight: 600;
+  color: #4a5568;
+  margin-bottom: 0.4rem;
+  font-size: 0.95rem;
+}
+
+input[type="email"],
+input[type="password"] {
+  padding: 0.75rem 1rem;
+  border: 1.8px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 1rem;
+  color: #2d3748;
+  font-family: 'Poppins', sans-serif;
+  margin-bottom: 1.8rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  outline: none;
+}
+
+input[type="email"]:focus,
+input[type="password"]:focus {
+  border-color: #4299e1;
+  box-shadow: 0 0 8px rgba(66, 153, 225, 0.4);
+}
+
+/* Submit button styled as link in your HTML, so style .btn */
+.btn {
+  display: inline-block;
+  background: linear-gradient(135deg, #4299e1, #3182ce);
+  color: white;
+  text-align: center;
+  padding: 14px 0;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  box-shadow: 0 6px 15px rgba(49, 130, 206, 0.43);
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  text-decoration: none;
+  width: 100%;
+}
+
+.btn:hover,
+.btn:focus {
+  background: linear-gradient(135deg, #3182ce, #2c5282);
+  box-shadow: 0 8px 25px rgba(49, 130, 206, 0.6);
+  transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 440px) {
+  .container {
+    width: 90%;
+    padding: 2rem;
+  }
+  .siteheader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .siteheader > div {
+    width: 100%;
+  }
+  .login-btn {
+    width: 100%;
+    text-align: center;
+  }
+}

@@ -1,0 +1,556 @@
+/* Import Google Fonts for better typography */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* Reset and Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif; /* Modern, friendly font */
+  line-height: 1.7;
+  color: #a2b6cb; /* Richer dark blue-gray for text */
+  background: linear-gradient(135deg, #a4a7b6 0%, #5d4b6e 100%); /* Vibrant purple-blue gradient */
+  min-height: 100vh;
+  padding: 20px;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5 {
+  margin-bottom: 15px;
+  color: #1a202c; /* Deep charcoal for headings */
+  font-weight: 600; /* Bolder for emphasis */
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.3s ease;
+}
+
+/* Header Styles */
+.siteheader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.95); /* Slightly more opaque for contrast */
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); /* Deeper shadow for depth */
+  margin-bottom: 25px;
+  backdrop-filter: blur(15px); /* Enhanced blur */
+  transition: all 0.4s ease;
+}
+
+.siteheader:hover {
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  transform: translateY(-3px);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  font-size: 2.5rem;
+  margin-right: 20px;
+  animation: gentleBounce 2s infinite;
+  color: #e74c3c; /* Vibrant red for logo */
+}
+
+@keyframes gentleBounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-5px); }
+  60% { transform: translateY(-3px); }
+}
+
+.header-buttons {
+  display: flex;
+  gap: 15px;
+}
+
+.header-btn {
+  padding: 12px 25px;
+  border-radius: 25px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: all 0.4s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.admin {
+  background: linear-gradient(135deg, #3498db, #2980b9); /* Bright blue gradient */
+  color: #fff;
+}
+
+.admin:hover {
+  background: linear-gradient(135deg, #2980b9, #21618c);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(52, 152, 219, 0.4);
+}
+
+.public {
+  background: linear-gradient(135deg, #27ae60, #229954); /* Vibrant green gradient */
+  color: #fff;
+}
+
+.public:hover {
+  background: linear-gradient(135deg, #229954, #1e8449);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(39, 174, 96, 0.4);
+}
+
+/* Alert Bar */
+.alert-bar {
+  display: flex;
+  align-items: center;
+  padding: 25px;
+  border-radius: 20px;
+  margin-bottom: 25px;
+  animation: softPulse 3s infinite;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  margin-right: 30px;
+  margin-left: 30px;
+}
+
+.severe {
+  background: linear-gradient(135deg, #e74c3c, #c0392b); /* Vibrant red-orange for urgency */
+  color: #fff;
+}
+
+.alert-icon {
+  font-size: 2.5rem;
+  margin-right: 20px;
+  animation: gentleShake 2s infinite;
+}
+
+@keyframes gentleShake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); }
+  20%, 40%, 60%, 80% { transform: translateX(2px); }
+}
+
+.alert-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.alert-type {
+  font-weight: 600;
+}
+
+.alert-severity {
+  background: rgba(255, 255, 255, 0.9);
+  color: #c0392b;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.alert-message {
+  margin-bottom: 15px;
+  font-size: 1.05rem;
+}
+
+.alert-meta {
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+
+@keyframes softPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.01); }
+  100% { transform: scale(1); }
+}
+
+/* Quick Actions */
+.quickactionsec {
+  margin-bottom: 25px;
+}
+
+.quickactionsec h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #1a202c;
+}
+
+.quickactions {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.action {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: all 0.4s ease;
+  text-align: center;
+  min-width: 140px;
+  font-size: 1rem;
+  backdrop-filter: blur(10px);
+}
+
+.action:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 1);
+}
+
+/* Helplines */
+.helplines {
+  margin-bottom: 25px;
+}
+
+.helplines h2 {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.helpline-subtitle {
+  text-align: center;
+  color: #5a6c7d;
+  margin-bottom: 25px;
+  font-style: italic;
+}
+
+.helpline-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  margin-bottom: 15px;
+  transition: all 0.4s ease;
+  backdrop-filter: blur(10px);
+}
+
+.helpline-card:hover {
+  transform: translateX(8px) scale(1.02);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 1);
+}
+
+.helpline-info {
+  display: flex;
+  align-items: center;
+}
+
+.helpline-icon {
+  font-size: 2rem;
+  margin-right: 15px;
+}
+
+.helpline-number {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #3498db;
+}
+
+.helpline-footer {
+  text-align: center;
+  margin-top: 25px;
+}
+
+.helpline-link {
+  color: #3498db;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.helpline-link:hover {
+  color: #2980b9;
+  text-decoration: underline;
+}
+
+/* Weather Section */
+.weather-section {
+  margin-bottom: 25px;
+}
+
+.weather-section h2 {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.weather-subtitle {
+  text-align: center;
+  color: #5a6c7d;
+  margin-bottom: 25px;
+  font-style: italic;
+}
+
+.weather-card {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.4s ease;
+  backdrop-filter: blur(10px);
+}
+
+.weather-card:hover {
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 1);
+  transform: scale(1.02);
+}
+
+.weather-main {
+  text-align: center;
+}
+
+.temp {
+  font-size: 2.5rem;
+  font-weight: 300;
+  color: #1a202c;
+}
+
+.condition {
+  color: #5a6c7d;
+  font-size: 1.1rem;
+}
+
+.weather-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 0.95rem;
+}
+
+/* Safety Tabs */
+.safety-tabs {
+  margin-bottom: 25px;
+}
+
+.safety-tabs h2 {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.safety-subtitle {
+  text-align: center;
+  color: #5a6c7d;
+  margin-bottom: 25px;
+  font-style: italic;
+}
+
+.tab-container {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.tab-label {
+  display: inline-block;
+  padding: 18px 25px;
+  background: #f8f9fa;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  font-weight: 500;
+  border-radius: 0;
+}
+
+.tab-label:hover {
+  background: #e2e8f0;
+  color: #3498db;
+}
+
+input[type="radio"] {
+  display: none;
+}
+
+
+
+
+.tab-content {
+  padding: 25px;
+  background: #fff;
+  border-radius: 0 0 20px 20px;
+}
+
+
+
+@keyframes softFadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.tab-content ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.tab-content li {
+  margin-bottom: 12px;
+  padding-left: 25px;
+  position: relative;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.tab-content li:before {
+  content: "🔹"; /* Modern diamond bullet */
+  position: absolute;
+  left: 0;
+  color: #3498db;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  body {
+    padding: 15px;
+  }
+
+  .siteheader {
+    flex-direction: column;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .header-buttons {
+    margin-top: 15px;
+  }
+
+  .quickactions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .action {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .helpline-card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .weather-card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .tab-label {
+    display: block;
+    text-align: center;
+  }
+}
+/* News Section Container */
+.news-scrolling-cards {
+  margin: 2rem 0;
+}
+
+.news-scrolling-cards h2 {
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 0.25rem;
+}
+
+.news-subtitle {
+  color: #718096;
+  margin-bottom: 1.25rem;
+  font-style: normal;
+  font-weight: 400;
+}
+
+
+.news-cards-wrapper {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  scroll-padding-left: 1rem;
+  scrollbar-width: thin;
+  scrollbar-color: #a0aec0 transparent;
+}
+
+/* Webkit scrollbar styling */
+.news-cards-wrapper::-webkit-scrollbar {
+  height: 8px;
+}
+
+.news-cards-wrapper::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.news-cards-wrapper::-webkit-scrollbar-thumb {
+  background-color: #a0aec0;
+  border-radius: 4px;
+}
+
+/* Single news card */
+.news-card {
+  flex: 0 0 300px; /* fixed width, no shrink */
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 180px;
+}
+
+.news-card:hover {
+  box-shadow: 0 4px 12px rgba(66, 153, 225, 0.25);
+  border-color: #3182ce;
+}
+
+.news-card h3 {
+  margin-bottom: 0.75rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #433017;
+}
+
+.news-card p {
+  flex-grow: 1;
+  color: #4a5568;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin-bottom: 1rem;
+}
+
+.news-card time {
+  color: #718096;
+  font-size: 0.8rem;
+  font-style: italic;
+  text-align: right;
+  user-select: none;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 500px) {
+  .news-card {
+    flex: 0 0 90vw; /* Cards full width on small screens */
+  }
+}
+.content-body {
+  display: none;
+  padding: 10px 0;
+}
+
+.collapsible {
+  cursor: pointer;
+  padding: 8px 0;
+  user-select: none;
+}

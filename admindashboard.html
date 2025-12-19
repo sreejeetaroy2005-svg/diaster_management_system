@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Disaster Alert Dashboard</title>
+  <link rel="stylesheet" href="style3.css">
+</head>
+<body>
+
+  <header class="dashboard-header">
+    
+    <h1>Send Disaster Alerts</h1>
+    <a href="front.html" class="logout-btn">Logout</a>
+  </header>
+
+  <main class="dashboard-container">
+
+    <section class="alert-form">
+      <h2>📢 Send New Alert</h2>
+      <p class="subtitle">Select region and disaster type to broadcast alert.</p>
+
+      <form>
+        <label for="location">Select Location</label>
+        <select id="location" required>
+          <option value="">-- Choose Location --</option>
+          <option>Mumbai</option>
+          <option>Chennai</option>
+          <option>Delhi</option>
+          <option>Kolkata</option>
+          <option>Bengaluru</option>
+          <option>Hyderabad</option>
+        </select>
+
+        <label for="disaster">Select Disaster Type</label>
+        <select id="disaster" required>
+          <option value="">-- Choose Disaster --</option>
+          <option>Flood</option>
+          <option>Earthquake</option>
+          <option>Fire</option>
+          <option>Cyclone</option>
+          <option>Landslide</option>
+        </select>
+
+        <label for="message">Write Alert Message</label>
+        <textarea id="message" rows="5" placeholder="Enter the message to be sent..." required></textarea>
+
+        <button type="submit" class="send-btn">Send Alert</button>
+      </form>
+    </section>
+
+  </main>
+
+
+</body>
+</html>
