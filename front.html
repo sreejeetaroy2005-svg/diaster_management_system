@@ -24,20 +24,28 @@
 
 
 
-<section class="alert-bar severe">
-  <div class="alert-icon">🌊</div>
+<section id="alertBar" class="alert-bar hidden">
+  
+
   <div class="alert-text">
     <div class="alert-header">
-      <span class="alert-type">Flood Warning</span>
-      <span class="alert-severity">Severe</span>
+      <span class="alert-type" id="alertType"></span>
+      <span class="alert-severity" id="alertSeverity"></span>
     </div>
-    <p class="alert-message">
-      Heavy flooding expected in <strong>Mumbai</strong>. Evacuate low-lying areas immediately.
+
+    <p class="alert-message" id="alertMessage"></p>
+
+    <p class="alert-meta">
+      Last updated:
+      <span id="alertTime"></span> |
+      <span id="alertLocation"></span>
     </p>
-    <p class="alert-meta">Last updated: <span class="alert-time">02:45 PM</span> | <span class="alert-location">Mumbai, India</span></p>
-    <h5> 📞 Call 1000 for assistance</h5>
+
+    <h5>📞 Call 100 for assistance</h5>
   </div>
 </section>
+
+
 
 
 
@@ -47,7 +55,7 @@
 
 <div class="action">🚨 Call 112</div>
 <a href="report.html" class="action">📢 Report Incident</a>
-<a href="reportincident.html" class="action">🏠 Find Shelter</a>
+<a href="findshelter.html" class="action">🏠 Find Shelter</a>
 <a href="radio.html" class="action">📻 Emergency Radio</a>
 </div>
 </section>
@@ -272,6 +280,40 @@ document.querySelectorAll(".collapsible").forEach(h3 => {
   });
 });
 </script>
+<script>
+const form = document.getElementById("incidentForm");
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const formData = new FormData(form);
+
+  try {
+    const response = await fetch("http://localhost:5000/api/incidents", {
+      method: "POST",
+      body: formData   // ❗ NO headers here
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      alert(data.message);
+      return;
+    }
+
+    alert("Incident submitted successfully!");
+    form.reset();
+  } catch (error) {
+    console.error(error);
+    alert("Error submitting form");
+  }
+});
+
+</script>
+<script src="alert.js"></script>
+<script src="shelter.js"></script>
+
+
 
 </body>
 </html>

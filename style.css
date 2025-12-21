@@ -103,69 +103,118 @@ a {
   box-shadow: 0 6px 15px rgba(39, 174, 96, 0.4);
 }
 
-/* Alert Bar */
+/* ===================== ALERT BAR ===================== */
 .alert-bar {
   display: flex;
   align-items: center;
-  padding: 25px;
+  gap: 20px;                   /* space between icon and text */
+  padding: 18px 24px;
   border-radius: 20px;
-  margin-bottom: 25px;
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto 25px auto;    /* centered horizontally */
   animation: softPulse 3s infinite;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-  margin-right: 30px;
-  margin-left: 30px;
-}
-
-.severe {
-  background: linear-gradient(135deg, #e74c3c, #c0392b); /* Vibrant red-orange for urgency */
+  background: linear-gradient(135deg, #952d2d, #4c3018); /* default warning color */
   color: #fff;
 }
 
+/* Alert text container */
+.alert-text {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+/* Severe / urgent alert */
+.alert-bar.severe {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+  color: #fff;
+}
+
+/* Alert icon */
 .alert-icon {
   font-size: 2.5rem;
-  margin-right: 20px;
+  flex-shrink: 0;              /* prevents shrinking on small screens */
   animation: gentleShake 2s infinite;
 }
 
+/* Alert header (type + severity) */
+.alert-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;              /* allows wrapping on small screens */
+}
+
+/* Alert type text */
+.alert-type {
+  font-weight: 600;
+  font-size: 1.15rem;
+}
+
+/* Alert severity label */
+.alert-severity {
+  background: rgba(133, 17, 17, 0.9);
+  color: #c42311;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+/* Alert main message */
+.alert-message {
+  margin-bottom: 6px;
+  font-size: 1.05rem;
+  line-height: 1.4;
+}
+
+/* Meta info (time, location) */
+.alert-meta {
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+
+/* Optional help line */
+.alert-text h5 {
+  margin-top: 6px;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+/* ===================== ANIMATIONS ===================== 
 @keyframes gentleShake {
   0%, 100% { transform: translateX(0); }
   10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); }
   20%, 40%, 60%, 80% { transform: translateX(2px); }
 }
 
-.alert-header {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 15px;
-}
-
-.alert-type {
-  font-weight: 600;
-}
-
-.alert-severity {
-  background: rgba(255, 255, 255, 0.9);
-  color: #c0392b;
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-size: 0.85rem;
-  font-weight: 500;
-}
-
-.alert-message {
-  margin-bottom: 15px;
-  font-size: 1.05rem;
-}
-
-.alert-meta {
-  font-size: 0.9rem;
-  opacity: 0.85;
-}
-
 @keyframes softPulse {
   0% { transform: scale(1); }
   50% { transform: scale(1.01); }
   100% { transform: scale(1); }
+}*/
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 768px) {
+  .alert-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 16px 20px;
+  }
+
+  .alert-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .alert-icon {
+    font-size: 2rem;
+  }
 }
 
 /* Quick Actions */

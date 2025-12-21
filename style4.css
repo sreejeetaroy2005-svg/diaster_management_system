@@ -6,7 +6,7 @@
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
-  background: linear-gradient(135deg, #9aa7df 0%, #9f85b9 100%);
+  background: linear-gradient(135deg, #d7e5db 0%, #62de6a 100%);
   color: #2c3e50;
   min-height: 100vh;
   padding: 20px;
@@ -16,13 +16,13 @@ body {
 
 
 .login-btn {
-  background: linear-gradient(135deg, #4299e1, #3182ce);
+  background: linear-gradient(135deg, #1f6710, #3182ce);
   color: white;
   padding: 10px 20px;
   border-radius: 30px;
   font-weight: 600;
   font-size: 1rem;
-  box-shadow: 0 6px 15px rgba(49, 130, 206, 0.43);
+  box-shadow: 0 6px 15px rgba(89, 142, 88, 0.43);
   cursor: pointer;
   text-decoration: none;
   transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
@@ -31,7 +31,7 @@ body {
 
 .login-btn:hover,
 .login-btn:focus {
-  background: linear-gradient(135deg, #3182ce, #2c5282);
+  background: linear-gradient(135deg, #051a2d, #2c5282);
   box-shadow: 0 8px 25px rgba(49, 130, 206, 0.6);
   transform: translateY(-2px);
 }
@@ -101,7 +101,7 @@ input[type="password"]:focus {
 /* Submit button styled as link in your HTML, so style .btn */
 .btn {
   display: inline-block;
-  background: linear-gradient(135deg, #4299e1, #3182ce);
+  background: linear-gradient(135deg, #056002, #097133);
   color: white;
   text-align: center;
   padding: 14px 0;

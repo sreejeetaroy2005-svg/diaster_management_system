@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Emergency Shelters India</title>
+
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  />
+
+  <style>
+    /* ---------- GLOBAL ---------- */
+body {
+  background: #0b0f14;
+  color: #eaeaea;
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+header {
+  background: linear-gradient(90deg, #b31217, #e52d27);
+  padding: 14px 20px;
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+}
+
+/* ---------- LAYOUT ---------- */
+#left {
+  width: 35%;
+  padding: 14px;
+  background: #0f1720;
+  border-right: 1px solid #1f2937;
+}
+
+#map {
+  width: 65%;
+}
+
+/* ---------- LIST ---------- */
+#list {
+  margin-top: 10px;
+}
+
+.shelter {
+  background: #111827;
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  border-left: 4px solid #3b82f6;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.shelter:hover {
+  background: #1f2937;
+  transform: translateX(3px);
+}
+
+.shelter strong {
+  font-size: 15px;
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* ---------- META ---------- */
+.meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+/* ---------- TYPE COLORS ---------- */
+.meta span:first-child {
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+.type-hospital { background: #7c3aed; }
+.type-police { background: #2563eb; }
+.type-fire_station { background: #dc2626; }
+.type-shelter { background: #16a34a; }
+
+/* ---------- LEAFLET ---------- */
+.leaflet-popup-content-wrapper {
+  background: #0f1720;
+  color: #eaeaea;
+  border-radius: 10px;
+}
+
+.leaflet-popup-tip {
+  background: #0f1720;
+}
+    body { margin: 0; }
+    main {
+      display: flex;
+      height: 100vh;
+    }
+    #left {
+      width: 35%;
+      padding: 10px;
+      background: #111;
+      color: white;
+      overflow-y: auto;
+    }
+    #map {
+      width: 65%;
+      height: 100%;
+    }
+  </style>
+</head>
+
+<body>
+
+<header><h1>Emergency Shelters India</h1></header>
+
+<main>
+  <div id="left">
+    <div class="small">Live Emergency Data</div>
+    <div id="list">Locating you...</div>
+  </div>
+
+  <!-- 🔥 THIS MUST EXIST -->
+  <div id="map"></div>
+</main>
+
+<!-- ✅ Scripts MUST be at bottom -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="shelter.js"></script>
+
+</body>
+</html>
