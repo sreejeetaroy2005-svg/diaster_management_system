@@ -9,7 +9,6 @@
 <body>
 
   <header class="dashboard-header">
-    
     <h1>Send Disaster Alerts</h1>
     <a href="front.html" class="logout-btn">Logout</a>
   </header>
@@ -20,37 +19,88 @@
       <h2>📢 Send New Alert</h2>
       <p class="subtitle">Select region and disaster type to broadcast alert.</p>
 
-      <form>
+      <!-- ✅ FORM ID ADDED -->
+      <form id="alertForm">
+
         <label for="location">Select Location</label>
         <select id="location" required>
           <option value="">-- Choose Location --</option>
-          <option>Mumbai</option>
-          <option>Chennai</option>
-          <option>Delhi</option>
-          <option>Kolkata</option>
-          <option>Bengaluru</option>
-          <option>Hyderabad</option>
+          <option value="Mumbai">Mumbai</option>
+          <option value="Chennai">Chennai</option>
+          <option value="Delhi">Delhi</option>
+          <option value="Kolkata">Kolkata</option>
+          <option value="Bengaluru">Bengaluru</option>
+          <option value="Hyderabad">Hyderabad</option>
         </select>
 
         <label for="disaster">Select Disaster Type</label>
         <select id="disaster" required>
           <option value="">-- Choose Disaster --</option>
-          <option>Flood</option>
-          <option>Earthquake</option>
-          <option>Fire</option>
-          <option>Cyclone</option>
-          <option>Landslide</option>
+          <option value="Flood">Flood</option>
+          <option value="Earthquake">Earthquake</option>
+          <option value="Fire">Fire</option>
+          <option value="Cyclone">Cyclone</option>
+          <option value="Landslide">Landslide</option>
         </select>
 
         <label for="message">Write Alert Message</label>
-        <textarea id="message" rows="5" placeholder="Enter the message to be sent..." required></textarea>
+        <textarea
+          id="message"
+          rows="5"
+          placeholder="Enter the message to be sent..."
+          required
+        ></textarea>
 
         <button type="submit" class="send-btn">Send Alert</button>
+
       </form>
     </section>
 
   </main>
 
+  <!-- ✅ SCRIPT -->
+  <script>
+    document.getElementById("alertForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const location = document.getElementById("location").value;
+      const disaster = document.getElementById("disaster").value;
+      const message = document.getElementById("message").value;
+
+      if (!location || !disaster || !message) {
+        alert("All fields are required");
+        return;
+      }
+
+      try {
+        const res = await fetch("http://localhost:5000/api/sendalert/send", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            location,
+            disaster,
+            message
+          })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          alert(data.error || "Failed to send alert");
+          return;
+        }
+
+        alert("✅ Alert sent successfully!");
+        document.getElementById("alertForm").reset();
+
+      } catch (err) {
+        console.error(err);
+        alert("❌ Server not reachable");
+      }
+    });
+  </script>
 
 </body>
 </html>

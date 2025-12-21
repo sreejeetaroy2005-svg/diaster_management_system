@@ -5,16 +5,24 @@ const cors = require("cors");
 const path = require("path");
 const weatherRouter = require("./routes/weather");
 const placesRoute = require("./routes/places");
+const weather2Routes=require("./routes/weather2");
+const userRoutes = require("./routes/users");
+
+
 
 const app = express();
 
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/api/weather", weatherRouter);
 app.use("/api/places", require("./routes/places"));
-
+app.use("/api/weather2", weather2Routes);
+app.use("/api/admin", require("./routes/adminRoutes"));
+app.use("/api/users", userRoutes);
+app.use("/api/sendalert", require("./routes/sendalertroute"));
 
 
 // Test route ✅
