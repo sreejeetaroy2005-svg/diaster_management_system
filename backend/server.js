@@ -7,6 +7,9 @@ const weatherRouter = require("./routes/weather");
 const placesRoute = require("./routes/places");
 const weather2Routes=require("./routes/weather2");
 const userRoutes = require("./routes/users");
+const emergencyRadioRoutes = require("./routes/emergencyRadio");
+
+
 
 
 
@@ -23,7 +26,8 @@ app.use("/api/weather2", weather2Routes);
 app.use("/api/admin", require("./routes/adminRoutes"));
 app.use("/api/users", userRoutes);
 app.use("/api/sendalert", require("./routes/sendalertroute"));
-
+app.use("/api/emergency-radio", emergencyRadioRoutes);
+app.use("/audio", express.static("audio"));
 
 // Test route ✅
 app.get("/", (req, res) => {
@@ -43,3 +47,5 @@ app.use("/api/incidents", incidentRoutes);
 // Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+

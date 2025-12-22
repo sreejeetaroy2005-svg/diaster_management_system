@@ -1,12 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Emergency Radio - Disaster Management</title>
-  <link rel="stylesheet" href="style.css">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      margin: 0;
+      padding: 0;
+    }
+
+    .site-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      background: #b30000;
+      color: white;
+      padding: 15px 20px;
+    }
+
+    .logo {
+      font-size: 32px;
+    }
+
+    .radio-section {
+      max-width: 600px;
+      margin: 40px auto;
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    audio {
+      width: 100%;
+      margin-top: 15px;
+    }
+
+    .status {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #555;
+    }
+  </style>
 </head>
+
 <body>
+
   <header class="site-header">
     <div class="logo">📻</div>
     <div>
@@ -16,11 +60,43 @@
   </header>
 
   <section class="radio-section">
-    <h2>Live Broadcast</h2>
-    <audio controls>
-      <source src="https://streams.radio.co/s95fa8b9dd/listen" type="audio/mpeg">
+    <h2>🔴 Live Broadcast</h2>
+
+    <!-- AUDIO PLAYER -->
+    <audio id="radio-player" controls autoplay>
       Your browser does not support the audio element.
     </audio>
+
+    <div class="status" id="radio-status">Loading emergency broadcast...</div>
   </section>
+
+  <script>
+fetch("http://localhost:5000/api/emergency-radio/live")
+  .then(res => {
+    if (!res.ok) {
+      throw new Error("API not found");
+    }
+    return res.json();
+  })
+  .then(data => {
+    const player = document.getElementById("radio-player");
+    const status = document.getElementById("radio-status");
+
+    if (data && data.audioUrl) {
+      player.src = data.audioUrl;
+      status.innerText = "Now Playing: " + (data.title || "Emergency Broadcast");
+      player.play();
+    } else {
+      status.innerText = "No active emergency broadcast.";
+    }
+  })
+  .catch(err => {
+    console.error("FETCH ERROR:", err);
+    document.getElementById("radio-status").innerText =
+      "Unable to load emergency radio.";
+  });
+</script>
+
+
 </body>
 </html>
