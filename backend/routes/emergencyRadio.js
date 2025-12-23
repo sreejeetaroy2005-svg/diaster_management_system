@@ -3,8 +3,6 @@ const router = express.Router();
 const EmergencyRadio = require("../models/EmergencyRadio");
 const multer = require("multer");
 const path = require("path");
-
-// Multer Setup
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, "audio"),
   filename: (req, file, cb) =>
@@ -25,8 +23,6 @@ const upload = multer({
     }
   }
 });
-
-// Upload Route
 router.post("/upload", upload.single("audio"), async (req, res) => {
   try {
     const { title, message, priority } = req.body;
@@ -45,8 +41,6 @@ router.post("/upload", upload.single("audio"), async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-
-// Live Route
 router.get("/live", async (req, res) => {
   try {
     const radio = await EmergencyRadio.findOne({ isActive: true })

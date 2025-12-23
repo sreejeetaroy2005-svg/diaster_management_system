@@ -8,7 +8,7 @@ const placesRoute = require("./routes/places");
 const weather2Routes=require("./routes/weather2");
 const userRoutes = require("./routes/users");
 const emergencyRadioRoutes = require("./routes/emergencyRadio");
-
+const axios = require("axios");
 
 
 
@@ -33,6 +33,15 @@ app.use("/audio", express.static("audio"));
 app.get("/", (req, res) => {
   res.send("Backend is running");
 });
+app.get("/api/news", async (req, res) => {
+  try {
+    const response = await axios.get("https://news.knowivate.com/api/latest");
+    res.json(response.data);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch news" });
+  }
+});
+
 
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URI)

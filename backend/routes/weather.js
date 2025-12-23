@@ -11,7 +11,6 @@ router.get("/", async (req, res) => {
     const response = await fetch(url);
     const data = await response.json();
 
-    // Send only relevant info for alert bar
     res.json({
       weather: data.weather[0].main,
       description: data.weather[0].description,

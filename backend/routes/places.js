@@ -10,14 +10,14 @@ router.get("/nearby", async (req, res) => {
     }
 
     const query = `
-      [out:json];
+      [out:json][timeout:25];
       (
         node["amenity"="hospital"](around:5000,${lat},${lon});
         node["amenity"="police"](around:5000,${lat},${lon});
         node["amenity"="fire_station"](around:5000,${lat},${lon});
         node["amenity"="shelter"](around:5000,${lat},${lon});
       );
-      out center;
+      out body;
     `;
 
     const response = await fetch(
@@ -31,12 +31,11 @@ router.get("/nearby", async (req, res) => {
       }
     );
 
-    // 🚨 SAFETY CHECK
     const text = await response.text();
 
     if (!response.ok || text.startsWith("<")) {
-      console.error("Overpass RAW RESPONSE:", text.slice(0, 200));
-      return res.status(500).json({ error: "Overpass API failure" });
+      console.error("Overpass RAW RESPONSE:", text.slice(0, 300));
+      return res.status(502).json({ error: "Overpass API error" });
     }
 
     const data = JSON.parse(text);

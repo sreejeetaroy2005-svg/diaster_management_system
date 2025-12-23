@@ -21,7 +21,7 @@ router.get("/", async (req, res) => {
       return res.status(500).json({ error: "Weather API failed" });
     }
 
-    // Format response for frontend
+    
     const weather = {
       temp: Math.round(data.main.temp),
       condition: data.weather[0].description,
